@@ -14,12 +14,9 @@ const Homepage = () => {
       setLoading(true);
       setPosts([]);
       try {
-        const res = await fetch(
-          "https://threads-clone-8hjb.onrender.com/api/posts/feed",
-          {
-            credentials: "include",
-          }
-        );
+        const res = await fetch("/api/posts/feed", {
+          credentials: "include",
+        });
         const data = await res.json();
         if (data.error) {
           showToast("Error", data.error, "error");

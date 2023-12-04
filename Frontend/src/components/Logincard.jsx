@@ -33,17 +33,14 @@ const Logincard = () => {
     setLoading(true);
     try {
       console.log(JSON.stringify(input));
-      const res = await fetch(
-        "https://threads-clone-8hjb.onrender.com/api/users/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(input),
-        }
-      );
+      const res = await fetch("/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(input),
+      });
 
       const data = await res.json();
       console.log(data);

@@ -35,17 +35,14 @@ const Signupcard = () => {
   const handleSignup = async () => {
     setLoading(true);
     try {
-      const res = await fetch(
-        "https://threads-clone-8hjb.onrender.com/api/users/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(input),
-        }
-      );
+      const res = await fetch("/api/users/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(input),
+      });
       const data = await res.json();
       console.log(data);
       if (data.error) {

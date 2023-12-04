@@ -5,7 +5,7 @@ import cookieParser from "cookie-parser";
 import userRoutes from "./routes/userRoutes.js";
 import postRoutes from "./routes/postRoutes.js";
 import { v2 as cloudinary } from "cloudinary";
-import cors from "cors";
+// import cors from "cors";
 dotenv.config();
 
 connectDB();
@@ -18,11 +18,11 @@ cloudinary.config({
   api_key: process.env.CLODINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
-const corsOptions = {
-  credentials: true,
-  origin: "https://threads-3pc2.onrender.com",
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   credentials: true,
+//   origin: "http://localhost:3000/Threads-Clone-Frontend",
+// };
+// app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());

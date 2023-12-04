@@ -54,21 +54,18 @@ const CreatePost = () => {
   const handleCreatePost = async () => {
     setLoading(true);
     try {
-      const res = await fetch(
-        "https://threads-clone-8hjb.onrender.com/api/posts/create",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify({
-            postedBy: user._id,
-            text: postText,
-            img: imgUrl,
-          }),
-        }
-      );
+      const res = await fetch("/api/posts/create", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({
+          postedBy: user._id,
+          text: postText,
+          img: imgUrl,
+        }),
+      });
       const data = await res.json();
       if (data.error) {
         showToast("Error", data.error, "error");
