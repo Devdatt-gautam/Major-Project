@@ -50,6 +50,13 @@ const Conversation = ({ conversation, isOnline }) => {
             : "gray.dark"
           : ""
       }
+      color={
+        selectedConversation?._id === conversation._id
+          ? colorMode === "light"
+            ? "white"
+            : "gray.200"
+          : ""
+      }
     >
       <WrapItem>
         <Avatar

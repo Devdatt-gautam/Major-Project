@@ -32,10 +32,12 @@ const MessageContainer = () => {
   const messageEndRef = useRef(null);
   useEffect(() => {
     socket?.on("newMessage", (message) => {
-      setMessages((prev) => [...prev, message]);
+      if (selectedConversation._id == message.conversationId) {
+        setMessages((prev) => [...prev, message]);
+      }
       setConversations((prev) => {
         const updated = prev.map((conversation) => {
-          if (conversation._id === selectedConversation._id) {
+          if (conversation._id === message.conversationId) {
             return {
               ...conversation,
               lastMessage: {

@@ -7,6 +7,7 @@ import {
   MenuList,
   MenuItem,
   useToast,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import { BsInstagram } from "react-icons/bs";
 import { CgMoreO } from "react-icons/cg";
@@ -148,7 +149,11 @@ const UserHeader = ({ user }) => {
               </MenuButton>
               <Portal>
                 <MenuList bg={"gray.dark"}>
-                  <MenuItem bg={"gray.dark"} onClick={copyURL}>
+                  <MenuItem
+                    bg={"gray.dark"}
+                    color={useColorModeValue("white", "")}
+                    onClick={copyURL}
+                  >
                     Copy Link
                   </MenuItem>
                 </MenuList>

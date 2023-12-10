@@ -1,5 +1,6 @@
 import Message from "../models/messageModel.js";
 import Conversation from "../models/conversationModel.js";
+import { getRecepientSocketId, io } from "../socket/socket.js";
 // import mongoose from "mongoose";
 const sendMessage = async (req, res) => {
   try {
@@ -30,17 +31,18 @@ const sendMessage = async (req, res) => {
       sender: senderId,
       text: message,
     });
+    await newMessage.save();
+    await conversation.updateOne({
+      lastMessage: {
+        text: message,
+        sender: senderId,
+      },
+    });
 
-    await Promise.all([
-      newMessage.save(),
-      conversation.updateOne({
-        lastMessage: {
-          text: message,
-          sender: senderId,
-        },
-      }),
-    ]);
-
+    const recepientSocketId = getRecepientSocketId(recepientId);
+    if (recepientSocketId) {
+      io.to(recepientSocketId).emit("newMessage", newMessage);
+    }
     res.status(201).json(newMessage);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -78,6 +80,12 @@ const getConversations = async (req, res) => {
     }).populate({
       path: "participants",
       select: "username profilePic",
+    });
+
+    conversations.forEach((conversation) => {
+      conversation.participants = conversation.participants.filter(
+        (participant) => participant._id.toString() !== userId.toString()
+      );
     });
 
     res.status(200).json(conversations);
