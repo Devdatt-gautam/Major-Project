@@ -8,6 +8,10 @@ const messageSchema = mongoose.Schema(
     },
     sender: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
     text: String,
+    img: {
+      type: String,
+      default: "",
+    },
   },
   { timestamps: true }
 );

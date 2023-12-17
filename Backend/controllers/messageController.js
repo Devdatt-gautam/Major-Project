@@ -1,10 +1,40 @@
 import Message from "../models/messageModel.js";
 import Conversation from "../models/conversationModel.js";
 import { getRecepientSocketId, io } from "../socket/socket.js";
+import { v2 as cloudinary } from "cloudinary";
+import language from "@google-cloud/language";
+import vision from "@google-cloud/vision";
+
 // import mongoose from "mongoose";
 const sendMessage = async (req, res) => {
   try {
     const { recepientId, message } = req.body;
+    let { img } = req.body;
+    const client = new language.v1.LanguageServiceClient();
+    //message profanity check
+    const document = {
+      content: message,
+      type: "PLAIN_TEXT",
+      languageCode: "*hi",
+    };
+    const request = {
+      document,
+    };
+
+    const result = await client.moderateText(request);
+
+    if (result) {
+      result[0].moderationCategories.map((cat) => {
+        if (cat.confidence >= 0.5) {
+          throw new Error(`Your text contains/is ${cat.name}`);
+        }
+      });
+    }
+
+    // const sentiment = result.documentSentiment;
+    // if (result.error) console.log(result.error, "hello");
+    // console.log(result[0].moderationCategories, result[0].languageCode);
+
     const senderId = req.user._id;
     if (senderId == recepientId) {
       throw new Error("You cannot send message to youself");
@@ -26,10 +56,36 @@ const sendMessage = async (req, res) => {
       await conversation.save();
     }
 
+    if (img) {
+      const client2 = new vision.ImageAnnotatorClient();
+
+      const request = {
+        image: {
+          content: img.split(",")[1],
+        },
+      };
+      // Performs label detection on the image file
+      const [result] = await client2.safeSearchDetection(request);
+      const detections = result.safeSearchAnnotation;
+
+      console.log(detections);
+
+      if (Object.values(detections).includes("LIKELY")) {
+        throw new Error(`Adult,racy,medical,spoofy or violent image`);
+      }
+      if (Object.values(detections).includes("VERY_LIKELY")) {
+        throw new Error(`Adult,racy,medical,spoofy or violent image`);
+      }
+
+      const uploadedResponse = await cloudinary.uploader.upload(img);
+      img = uploadedResponse.secure_url;
+    }
+
     const newMessage = new Message({
       conversationId: conversation._id,
       sender: senderId,
       text: message,
+      img: img || "",
     });
     await newMessage.save();
     await conversation.updateOne({

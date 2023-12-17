@@ -39,13 +39,10 @@ const Post = ({ post, postedBy }) => {
     try {
       e.preventDefault();
       if (!window.confirm("Are you sure want to delete this post?")) return;
-      const res = await fetch(
-        `https://threads-clone-8hjb.onrender.com/api/posts/${post._id}`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        }
-      );
+      const res = await fetch(`/api/posts/${post._id}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
       const data = await res.json();
       if (data.error) {
         showToast("Error", data.error, "error");

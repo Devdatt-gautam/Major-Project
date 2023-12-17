@@ -1,10 +1,14 @@
 import User from "../models/userModel.js";
 import Post from "../models/postModel.js";
 import { v2 as cloudinary } from "cloudinary";
+import language from "@google-cloud/language";
+import vision from "@google-cloud/vision";
+
 const createPost = async (req, res) => {
   try {
     const { postedBy, text } = req.body;
     let { img } = req.body;
+
     if (!postedBy || !text) {
       return res
         .status(400)
@@ -25,7 +29,51 @@ const createPost = async (req, res) => {
         .status(400)
         .json({ error: `text must be less than ${maxLength} characters` });
     }
+
+    //anti profanity
+    const client = new language.v1.LanguageServiceClient();
+
+    //message profanity check
+    const document = {
+      content: text,
+      type: "PLAIN_TEXT",
+      languageCode: "*hi",
+    };
+    const request = {
+      document,
+    };
+
+    const result = await client.moderateText(request);
+
+    if (result) {
+      result[0].moderationCategories.map((cat) => {
+        if (cat.confidence >= 0.5) {
+          throw new Error(`Your text contains/is ${cat.name}`);
+        }
+      });
+    }
+
     if (img) {
+      // Creates a client
+      const client2 = new vision.ImageAnnotatorClient();
+
+      const request = {
+        image: {
+          content: img.split(",")[1],
+        },
+      };
+      // Performs label detection on the image file
+      const [result] = await client2.safeSearchDetection(request);
+      const detections = result.safeSearchAnnotation;
+
+      console.log(detections);
+      let exists = Object.values(detections).includes(
+        "LIKELY" || "VERY_LIKELY"
+      );
+      if (exists) {
+        throw new Error(`Adult,racy,medical,spoofy or violent image`);
+      }
+
       const uploadResponse = await cloudinary.uploader.upload(img);
       img = uploadResponse.secure_url;
     }
