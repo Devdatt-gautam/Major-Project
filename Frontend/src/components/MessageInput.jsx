@@ -54,6 +54,7 @@ const MessageInput = ({ setMessages }) => {
       });
       const data = await res.json();
       if (data.error) {
+        setMessageText("");
         return showToast("Error", data.error, "error");
       }
 
