@@ -31,7 +31,10 @@ const createPost = async (req, res) => {
     }
 
     //anti profanity
-    const client = new language.v1.LanguageServiceClient();
+    const client = new language.v1.LanguageServiceClient({
+      projectId: process.env.GOOGLE_PROJECT_ID,
+      key: process.env.GOOGLE_CLOUD_KEY,
+    });
 
     //message profanity check
     const document = {
@@ -55,7 +58,10 @@ const createPost = async (req, res) => {
 
     if (img) {
       // Creates a client
-      const client2 = new vision.ImageAnnotatorClient();
+      const client2 = new vision.ImageAnnotatorClient({
+        projectId: process.env.GOOGLE_PROJECT_ID,
+        key: process.env.GOOGLE_CLOUD_KEY,
+      });
 
       const request = {
         image: {
