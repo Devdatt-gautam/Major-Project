@@ -37,7 +37,9 @@ const ChatPage = () => {
   useEffect(() => {
     const getConversations = async () => {
       try {
-        const res = await fetch("/api/messages/");
+        const res = await fetch(
+          "https://antiprofanitybackend.onrender.com/api/messages/"
+        );
         const data = await res.json();
         if (data.error) {
           return showToast("Error", data.error, "error");
@@ -57,7 +59,9 @@ const ChatPage = () => {
     e.preventDefault();
     setSearchingUser(true);
     try {
-      const res = await fetch(`/api/users/profile/${searchText}`);
+      const res = await fetch(
+        `https://antiprofanitybackend.onrender.com/api/users/profile/${searchText}`
+      );
       const searchedUser = await res.json();
       if (searchedUser.error) {
         return showToast("Error", searchedUser.error, "error");

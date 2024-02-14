@@ -18,13 +18,16 @@ const Header = () => {
 
   const handleLogout = async () => {
     try {
-      const res = await fetch("/api/users/logout", {
-        method: "POST",
-        headers: {
-          "Content-Type": "applicatio/json",
-        },
-        credentials: "include",
-      });
+      const res = await fetch(
+        "https://antiprofanitybackend.onrender.com/api/users/logout",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "applicatio/json",
+          },
+          credentials: "include",
+        }
+      );
       const data = await res.json();
       console.log(data);
       if (data.error) {

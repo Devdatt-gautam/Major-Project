@@ -41,17 +41,20 @@ const MessageInput = ({ setMessages }) => {
 
     setIsSending(true);
     try {
-      const res = await fetch(`/api/messages/`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          message: messageText,
-          recepientId: selectedConversation.userId,
-          img: imgUrl,
-        }),
-      });
+      const res = await fetch(
+        `https://antiprofanitybackend.onrender.com/api/messages/`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            message: messageText,
+            recepientId: selectedConversation.userId,
+            img: imgUrl,
+          }),
+        }
+      );
       const data = await res.json();
       if (data.error) {
         setMessageText("");

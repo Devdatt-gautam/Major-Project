@@ -36,14 +36,17 @@ const UpdateProfilePage = () => {
     }
     setUpdating(true);
     try {
-      const res = await fetch(`/api/users/update/${user._id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-        body: JSON.stringify({ ...input, profilePic: imgUrl }),
-      });
+      const res = await fetch(
+        `https://antiprofanitybackend.onrender.com/api/users/update/${user._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ ...input, profilePic: imgUrl }),
+        }
+      );
       const data = await res.json();
       if (data.error) {
         showToast("Error", data.error, "error");

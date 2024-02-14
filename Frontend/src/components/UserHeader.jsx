@@ -40,7 +40,7 @@ const UserHeader = ({ user }) => {
 
   const handleFollowUnfollow = async () => {
     if (!currentUser) {
-      showToast("Eror", "Please login to follow", "error");
+      showToast("Error", "Please login to follow", "error");
       return;
     }
     if (updating) {
@@ -48,13 +48,16 @@ const UserHeader = ({ user }) => {
     }
     setUpdating(true);
     try {
-      const res = await fetch(`/api/users/follow/${user._id}`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
+      const res = await fetch(
+        `https://antiprofanitybackend.onrender.com/api/users/follow/${user._id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const data = res.json();
       if (data.error) {
         showToast("Error", data.error, "error");

@@ -34,9 +34,12 @@ const PostPage = () => {
     const getPost = async () => {
       setPosts([]);
       try {
-        const res = await fetch(`/api/posts/${pid}`, {
-          credentials: "include",
-        });
+        const res = await fetch(
+          `https://antiprofanitybackend.onrender.com/api/posts/${pid}`,
+          {
+            credentials: "include",
+          }
+        );
         const data = await res.json();
         if (data.error) {
           showToast("Error", data.error, "error");
@@ -55,10 +58,13 @@ const PostPage = () => {
     try {
       e.preventDefault();
       if (!window.confirm("Are you sure want to delete this post?")) return;
-      const res = await fetch(`/api/posts/${currentPost._id}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `https://antiprofanitybackend.onrender.com/api/posts/${currentPost._id}`,
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
+      );
       const data = await res.json();
       if (data.error) {
         showToast("Error", data.error, "error");

@@ -18,9 +18,12 @@ const UserPage = () => {
     const getPosts = async () => {
       setFetchingPosts(true);
       try {
-        const res = await fetch(`/api/posts/user/${username}`, {
-          credentials: "include",
-        });
+        const res = await fetch(
+          `https://antiprofanitybackend.onrender.com/api/posts/user/${username}`,
+          {
+            credentials: "include",
+          }
+        );
         const data = await res.json();
         if (data.error) {
           showToast("Error", data.error, "error");
