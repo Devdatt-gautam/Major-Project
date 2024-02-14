@@ -10,9 +10,7 @@ export default defineConfig({
     //get rid of cors errors
     proxy: {
       "/api": {
-        target: "http://localhost:5000",
-        changeOrigin: true,
-        secure: false,
+        target: "https://antiprofanitybackend.onrender.com",
       },
     },
   },

@@ -7,10 +7,14 @@ import postRoutes from "./routes/postRoutes.js";
 import messageRoutes from "./routes/messageRoutes.js";
 import { v2 as cloudinary } from "cloudinary";
 import { app, server } from "./socket/socket.js";
-
-// import cors from "cors";
+import cors from "cors";
 dotenv.config();
 
+const corsOptions = {
+  credentials: true,
+  origin: "https://antiprofanityfrontend.onrender.com",
+};
+app.use(cors(corsOptions));
 connectDB();
 
 const PORT = process.env.PORT || 5000;
@@ -20,11 +24,6 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-// const corsOptions = {
-//   credentials: true,
-//   origin: "http://localhost:3000/Threads-Clone-Frontend",
-// };
-// app.use(cors());
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
