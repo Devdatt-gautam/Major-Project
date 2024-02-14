@@ -62,7 +62,12 @@ const MessageContainer = () => {
           setMessages([]);
           return;
         }
-        const res = await fetch(`/api/messages/${selectedConversation.userId}`);
+        const res = await fetch(
+          `/api/messages/${selectedConversation.userId}`,
+          {
+            credentials: "include",
+          }
+        );
         const data = await res.json();
         if (data.error) {
           return showToast("Error", data.error, "error");
