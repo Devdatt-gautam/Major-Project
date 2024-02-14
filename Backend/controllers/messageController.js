@@ -10,15 +10,13 @@ const sendMessage = async (req, res) => {
   try {
     const { recepientId, message } = req.body;
     let { img } = req.body;
-    const client = new language.v1.LanguageServiceClient({
-      projectId: process.env.GOOGLE_PROJECT_ID,
-      key: process.env.GOOGLE_CLOUD_KEY,
-    });
+    const client = new language.v1.LanguageServiceClient();
     //message profanity check
     const document = {
       content: message,
       type: "PLAIN_TEXT",
       languageCode: "*hi",
+      key: process.env.GOOGLE_CLOUD_KEY,
     };
     const request = {
       document,
