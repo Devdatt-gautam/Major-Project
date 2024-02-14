@@ -8,10 +8,10 @@ export default defineConfig({
   server: {
     port: 3000,
     //get rid of cors errors
-    // proxy: {
-    //   "/api": {
-    //     target: "https://antiprofanitybackend.onrender.com",
-    //   },
-    // },
+    proxy: {
+      "/api": {
+        target: "https://antiprofanitybackend.onrender.com",
+      },
+    },
   },
 });
