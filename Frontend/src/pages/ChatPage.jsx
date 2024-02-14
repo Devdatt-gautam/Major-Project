@@ -38,7 +38,10 @@ const ChatPage = () => {
     const getConversations = async () => {
       try {
         const res = await fetch(
-          "https://antiprofanitybackend.onrender.com/api/messages/"
+          "https://antiprofanitybackend.onrender.com/api/messages/",
+          {
+            credentials: "include",
+          }
         );
         const data = await res.json();
         if (data.error) {
