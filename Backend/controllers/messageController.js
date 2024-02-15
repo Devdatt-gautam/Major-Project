@@ -11,7 +11,7 @@ const sendMessage = async (req, res) => {
     const { recepientId, message } = req.body;
     let { img } = req.body;
     const client = new language.v1.LanguageServiceClient({
-      keyFilename: "../cloud.json",
+      keyFilename: "/etc/secrets/google",
     });
     //message profanity check
     const document = {
@@ -60,7 +60,7 @@ const sendMessage = async (req, res) => {
 
     if (img) {
       const client2 = new vision.ImageAnnotatorClient({
-        keyFilename: "../cloud.json",
+        keyFilename: "/etc/secrets/google",
       });
 
       const request = {

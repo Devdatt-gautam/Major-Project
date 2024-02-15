@@ -32,7 +32,7 @@ const createPost = async (req, res) => {
 
     //anti profanity
     const client = new language.v1.LanguageServiceClient({
-      keyFilename: "../cloud.json",
+      keyFilename: "/etc/secrets/google",
     });
 
     //message profanity check
@@ -58,7 +58,7 @@ const createPost = async (req, res) => {
     if (img) {
       // Creates a client
       const client2 = new vision.ImageAnnotatorClient({
-        keyFilename: "../cloud.json",
+        keyFilename: "/etc/secrets/google",
       });
 
       const request = {
