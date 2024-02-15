@@ -10,13 +10,14 @@ const sendMessage = async (req, res) => {
   try {
     const { recepientId, message } = req.body;
     let { img } = req.body;
-    const client = new language.v1.LanguageServiceClient();
+    const client = new language.v1.LanguageServiceClient({
+      keyFilename: "../cloud.json",
+    });
     //message profanity check
     const document = {
       content: message,
       type: "PLAIN_TEXT",
       languageCode: "*hi",
-      key: process.env.GOOGLE_CLOUD_KEY,
     };
     const request = {
       document,
@@ -59,8 +60,7 @@ const sendMessage = async (req, res) => {
 
     if (img) {
       const client2 = new vision.ImageAnnotatorClient({
-        projectId: process.env.GOOGLE_PROJECT_ID,
-        key: process.env.GOOGLE_CLOUD_KEY,
+        keyFilename: "../cloud.json",
       });
 
       const request = {

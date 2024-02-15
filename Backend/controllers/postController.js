@@ -32,8 +32,7 @@ const createPost = async (req, res) => {
 
     //anti profanity
     const client = new language.v1.LanguageServiceClient({
-      projectId: process.env.GOOGLE_PROJECT_ID,
-      key: process.env.GOOGLE_CLOUD_KEY,
+      keyFilename: "../cloud.json",
     });
 
     //message profanity check
@@ -59,8 +58,7 @@ const createPost = async (req, res) => {
     if (img) {
       // Creates a client
       const client2 = new vision.ImageAnnotatorClient({
-        projectId: process.env.GOOGLE_PROJECT_ID,
-        key: process.env.GOOGLE_CLOUD_KEY,
+        keyFilename: "../cloud.json",
       });
 
       const request = {
