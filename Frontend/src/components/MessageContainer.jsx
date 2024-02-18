@@ -63,7 +63,7 @@ const MessageContainer = () => {
           return;
         }
         const res = await fetch(
-          `/api/messages/${selectedConversation.userId}`,
+          `https://antiprofanitybackend.onrender.com/api/messages/${selectedConversation.userId}`,
           {
             credentials: "include",
           }
