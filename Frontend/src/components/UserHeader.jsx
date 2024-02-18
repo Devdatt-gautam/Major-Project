@@ -95,7 +95,7 @@ const UserHeader = ({ user }) => {
               p={1}
               borderRadius={"full"}
             >
-              threads.net
+              SafeChat
             </Text>
           </Flex>
         </Box>
