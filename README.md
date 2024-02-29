@@ -7,7 +7,7 @@ Anti-Profanity Social Media And Chat App.
 
 https://antiprofanityfrontend.onrender.com/
 
-Demo username:Randomgautam | Password:123456
+Demo username:randomgautam | Password:123456
             
 ## Tech Stack
 
