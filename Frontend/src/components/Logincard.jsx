@@ -128,6 +128,20 @@ const Logincard = () => {
             </Stack>
             <Stack pt={6}>
               <Text align={"center"}>
+                Need dummy account?{" "}
+                <Link
+                  color={"blue.400"}
+                  onClick={() => {
+                    setInput({ username: "randomgautam", password: "123456" });
+                    handleLogin();
+                  }}
+                >
+                  Guest User
+                </Link>
+              </Text>
+            </Stack>
+            <Stack pt={3}>
+              <Text align={"center"}>
                 Don&apos;t have an account?{" "}
                 <Link
                   color={"blue.400"}
