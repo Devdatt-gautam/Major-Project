@@ -29,10 +29,10 @@ const Logincard = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const handleLogin = async () => {
+  const handleLogin = async (updatedInput) => {
     setLoading(true);
     try {
-      console.log(JSON.stringify(input));
+      console.log(JSON.stringify(updatedInput));
       const res = await fetch(
         "https://antiprofanitybackend.onrender.com/api/users/login",
         {
@@ -41,7 +41,7 @@ const Logincard = () => {
             "Content-Type": "application/json",
           },
           credentials: "include",
-          body: JSON.stringify(input),
+          body: JSON.stringify(updatedInput),
         }
       );
 
@@ -120,7 +120,7 @@ const Logincard = () => {
                 _hover={{
                   bg: useColorModeValue("gray.700", "gray.800"),
                 }}
-                onClick={handleLogin}
+                onClick={() => handleLogin(input)}
                 isLoading={loading}
               >
                 Login
@@ -132,8 +132,12 @@ const Logincard = () => {
                 <Link
                   color={"blue.400"}
                   onClick={() => {
-                    setInput({ username: "randomgautam", password: "123456" });
-                    handleLogin();
+                    const guestCredentials = {
+                      username: "randomgautam",
+                      password: "123456",
+                    };
+                    setInput(guestCredentials); // This updates the state asynchronously
+                    handleLogin(guestCredentials);
                   }}
                 >
                   Guest User
