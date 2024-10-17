@@ -18,6 +18,6 @@ router.post("/login", logInUser);
 router.post("/logout", logOutUser);
 router.post("/follow/:id", protectRoute, followUnfollowUser);
 router.put("/update/:id", protectRoute, updateUser);
-router.post("/suggested", protectRoute, getSuggestedUsers);
+router.get("/suggested", protectRoute, getSuggestedUsers);
 
 export default router;
