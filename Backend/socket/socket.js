@@ -6,7 +6,11 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "https://antiprofanityfrontend.onrender.com",
+    origin: [
+      "https://antiprofanityfrontend.onrender.com",
+      "http://localhost:3000",
+    ],
+    credentials: true,
     methods: ["GET", "POST"],
   },
 });
