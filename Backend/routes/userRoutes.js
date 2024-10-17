@@ -6,8 +6,10 @@ import {
   followUnfollowUser,
   updateUser,
   getUserProfile,
+  getSuggestedUsers,
 } from "../controllers/userController.js";
 import protectRoute from "../middlewares/protectRoute.js";
+
 const router = express.Router();
 
 router.get("/profile/:query", getUserProfile);
@@ -16,5 +18,6 @@ router.post("/login", logInUser);
 router.post("/logout", logOutUser);
 router.post("/follow/:id", protectRoute, followUnfollowUser);
 router.put("/update/:id", protectRoute, updateUser);
+router.post("/suggested", protectRoute, getSuggestedUsers);
 
 export default router;
