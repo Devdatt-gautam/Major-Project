@@ -5,6 +5,7 @@ import useShowToast from "./../../hooks/useShowToast";
 import Post from "../components/Post";
 import { useRecoilState } from "recoil";
 import postsAtom from "../../atoms/postsAtom";
+import SuggestedUsers from "../components/SuggestedUsers";
 // import SuggestedUsers from "../components/SuggestedUsers";
 const Homepage = () => {
   const showToast = useShowToast();
@@ -52,9 +53,9 @@ const Homepage = () => {
           return <Post key={post._id} post={post} postedBy={post.postedBy} />;
         })}
       </Box>
-      {/* <Box flex={30}>
+      <Box flex={30}>
         <SuggestedUsers />
-      </Box> */}
+      </Box>
     </Flex>
   );
 };

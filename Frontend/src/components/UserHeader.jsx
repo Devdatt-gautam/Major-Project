@@ -15,16 +15,14 @@ import { useRecoilValue } from "recoil";
 import userAtom from "./../../atoms/userAtom";
 import { Button } from "@chakra-ui/button";
 import { Link as RouterLink } from "react-router-dom";
-import { useState } from "react";
-import useShowToast from "../../hooks/useShowToast";
+// import { useState } from "react";
+import useFollowUnfollow from "../../hooks/useFollowUnfollow";
+// import useShowToast from "../../hooks/useShowToast";
 const UserHeader = ({ user }) => {
   const toast = useToast();
-  const showToast = useShowToast();
+  // const showToast = useShowToast();
   const currentUser = useRecoilValue(userAtom); //logged in user
-  const [following, setFollowing] = useState(
-    user.followers.includes(currentUser._id)
-  );
-  const [updating, setUpdating] = useState(false);
+  const { handleFollowUnfollow, updating, following } = useFollowUnfollow(user);
 
   const copyURL = () => {
     const currentURL = window.location.href;
@@ -36,47 +34,6 @@ const UserHeader = ({ user }) => {
         isClosable: true,
       })
     );
-  };
-
-  const handleFollowUnfollow = async () => {
-    if (!currentUser) {
-      showToast("Error", "Please login to follow", "error");
-      return;
-    }
-    if (updating) {
-      return;
-    }
-    setUpdating(true);
-    try {
-      const res = await fetch(
-        `https://antiprofanitybackend.onrender.com/api/users/follow/${user._id}`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-        }
-      );
-      const data = res.json();
-      if (data.error) {
-        showToast("Error", data.error, "error");
-        return;
-      }
-
-      if (following) {
-        showToast("Success", `unfollowed ${user.name}`, "success");
-        user.followers.pop(currentUser?._id);
-      } else {
-        showToast("Success", `followed ${user.name}`, "success");
-        user.followers.push(currentUser?._id);
-      }
-      setFollowing(!following);
-    } catch (error) {
-      showToast("Error", error, "error");
-    } finally {
-      setUpdating(false);
-    }
   };
 
   return (
