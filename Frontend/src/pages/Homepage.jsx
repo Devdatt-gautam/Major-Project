@@ -53,7 +53,7 @@ const Homepage = () => {
           return <Post key={post._id} post={post} postedBy={post.postedBy} />;
         })}
       </Box>
-      <Box flex={30}>
+      <Box flex={30} display={{ base: "none", md: "block" }}>
         <SuggestedUsers />
       </Box>
     </Flex>
