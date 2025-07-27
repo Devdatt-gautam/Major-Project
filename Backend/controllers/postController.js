@@ -163,6 +163,33 @@ const replyToPost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ error: "Post not found" });
     }
+
+    //anti profanity
+    const client = new language.v1.LanguageServiceClient({
+      keyFilename: "/etc/secrets/google",
+    });
+
+    //message profanity check
+    const document = {
+      content: text,
+      type: "PLAIN_TEXT",
+      languageCode: "*hi",
+    };
+    const request = {
+      document,
+    };
+
+    const result = await client.moderateText(request);
+
+    if (result) {
+      result[0].moderationCategories.map((cat) => {
+        if (cat.confidence >= 0.5) {
+          throw new Error(`Your text contains/is ${cat.name}`);
+        }
+      });
+    }
+
+    
     const reply = { userId, text, username, userProfilePic };
     post.replies.push(reply);
     await post.save();
